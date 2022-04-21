@@ -11,10 +11,14 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of users">
-      <td>{{ user.title }} {{ user.firstName }} {{ user.lastName }}</td>
+    <tr>
+      <!--<tr *ngFor="let user of users">
+       <td>{{ user.title }} {{ user.firstName }} {{ user.lastName }}</td>
       <td>{{ user.email }}</td>
-      <td>{{ user.phone }}</td>
+      <td>{{ user.phone }}</td> -->
+      <td>Anjali</td>
+      <td>anjali@gmail.com</td>
+      <td>9080706050</td>
       <td style="white-space: nowrap">
         <a routerLink="edit/{{ user.id }}" class="btn btn-sm btn-primary mr-1"
           >Edit</a
