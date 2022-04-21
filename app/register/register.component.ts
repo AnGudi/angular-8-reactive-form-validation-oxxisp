@@ -56,13 +56,13 @@ export class RegisterComponent implements OnInit {
         validator: MustMatch('password', 'confirmPassword'),
       }
     );
-    
-    if (!this.isAddMode) {
-      this.employeeService
-        .getAll(this.id)
-        .pipe(first())
-        .subscribe((x) => this.registerForm.patchValue(x));
-    }
+
+    // if (!this.isAddMode) {
+    //   this.employeeService
+    //     .getAll(this.id)
+    //     .pipe(first())
+    //     .subscribe((x) => this.registerForm.patchValue(x));
+    // }
   }
 
   // convenience getter for easy access to form fields
