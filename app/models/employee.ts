@@ -1,9 +1,10 @@
 export class Employee {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   phone: number;
   emailId: string;
   password: string;
   active: boolean;
+  isDeleting: boolean = false;
 }
