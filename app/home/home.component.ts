@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.userservice
-      .getAll(1)
+      .getAll()
       .pipe(first())
       .subscribe((users) => (this.users = users));
   }
@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     if (!user) return;
     user.isDeleting = true;
     this.userservice
-      .deleteEmployee(1)
+      .delete(id)
       .pipe(first())
       .subscribe(() => (this.users = this.users.filter((x) => x.id !== id)));
   }

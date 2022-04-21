@@ -1,33 +1,34 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Employee } from '../models/employee';
+import { environment } from '../environments/environment';
+
+const baseUrl = `${environment.apiUrl}/users`;
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
-  private baseUrl =
-    'https://angular-8-reactive-form-validation-oxxisp.stackblitz.io/register';
-
   constructor(private http: HttpClient) {}
 
-  getAll(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}`);
+  getAll() {
+    return this.http.get<Employee[]>(baseUrl);
   }
 
-  createEmployee(employee: Object): Observable<Object> {
-    return this.http.post(`${this.baseUrl}`, employee);
+  getById(id: string) {
+    return this.http.get<Employee>(`${baseUrl}/${id}`);
   }
 
-  updateEmployee(id: number, value: any): Observable<Object> {
-    return this.http.put(`${this.baseUrl}/${id}`, value);
+  create(params: any) {
+    return this.http.post(baseUrl, params);
   }
 
-  deleteEmployee(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+  update(id: string, params: any) {
+    return this.http.put(`${baseUrl}/${id}`, params);
   }
 
-  getEmployeesList(): Observable<any> {
-    return this.http.get(`${this.baseUrl}`);
+  delete(id: string) {
+    return this.http.delete(`${baseUrl}/${id}`);
   }
 }

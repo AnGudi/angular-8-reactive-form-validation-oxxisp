@@ -23,7 +23,13 @@
         <a routerLink="edit/{{ user.id }}" class="btn btn-sm btn-primary mr-1"
           >Edit</a
         >
-        <button
+      </td>
+
+      <td style="white-space: nowrap">
+        <a routerLink="edit/{{ user.id }}" class="btn btn-sm btn-danger mr-1"
+          >Delete</a
+        >
+        <!-- <button
           (click)="deleteUser(user.id)"
           class="btn btn-sm btn-danger btn-delete-user"
           [disabled]="user.isDeleting"
@@ -33,7 +39,7 @@
             class="spinner-border spinner-border-sm"
           ></span>
           <span *ngIf="!user.isDeleting">Delete</span>
-        </button>
+        </button> -->
       </td>
     </tr>
     <tr *ngIf="!users">
