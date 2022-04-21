@@ -31,8 +31,8 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id'];
-    this.isAddMode = !this.id;
+    // this.id = this.route.snapshot.params['id'];
+    // this.isAddMode = !this.id;
 
     this.registerForm = this.formBuilder.group(
       {
@@ -57,12 +57,12 @@ export class RegisterComponent implements OnInit {
       }
     );
 
-    if (!this.isAddMode) {
-      this.employeeService
-        .getById(this.id)
-        .pipe(first())
-        .subscribe((x) => this.registerForm.patchValue(x));
-    }
+    // if (!this.isAddMode) {
+    //   this.employeeService
+    //     .getById(this.id)
+    //     .pipe(first())
+    //     .subscribe((x) => this.registerForm.patchValue(x));
+    // }
   }
 
   // convenience getter for easy access to form fields
@@ -77,43 +77,43 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
+    console.log(this.registerForm.value);
 
     // display form values on success
-    alert(
-      'SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 5)
-    );
-
-    this.loading = true;
-    if (this.isAddMode) {
-      this.createUser();
-    } else {
-      this.updateUser();
-    }
+    // alert(
+    //   'SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 7)
+    // );
+    // this.loading = true;
+    // if (this.isAddMode) {
+    //   this.createUser();
+    // } else {
+    //   this.updateUser();
+    // }
   }
 
-  private createUser() {
-    this.employeeService
-      .create(this.registerForm.value)
-      .pipe(first())
-      .subscribe(() => {
-        // this.alertService.success('User added', { keepAfterRouteChange: true });
-        this.router.navigate(['../'], { relativeTo: this.route });
-      })
-      .add(() => (this.loading = false));
-  }
+  // private createUser() {
+  //   this.employeeService
+  //     .create(this.registerForm.value)
+  //     .pipe(first())
+  //     .subscribe(() => {
+  //       // this.alertService.success('User added', { keepAfterRouteChange: true });
+  //       this.router.navigate(['../'], { relativeTo: this.route });
+  //     })
+  //     .add(() => (this.loading = false));
+  // }
 
-  private updateUser() {
-    this.employeeService
-      .update(this.id, this.registerForm.value)
-      .pipe(first())
-      .subscribe(() => {
-        // this.alertService.success('User updated', {
-        //   keepAfterRouteChange: true,
-        // });
-        this.router.navigate(['../../'], { relativeTo: this.route });
-      })
-      .add(() => (this.loading = false));
-  }
+  // private updateUser() {
+  //   this.employeeService
+  //     .update(this.id, this.registerForm.value)
+  //     .pipe(first())
+  //     .subscribe(() => {
+  //       // this.alertService.success('User updated', {
+  //       //   keepAfterRouteChange: true,
+  //       // });
+  //       this.router.navigate(['../../'], { relativeTo: this.route });
+  //     })
+  //     .add(() => (this.loading = false));
+  // }
 
   onReset() {
     this.submitted = false;
