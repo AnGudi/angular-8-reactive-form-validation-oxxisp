@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MustMatch } from '../_helpers/must-match.validator';
 
 @Component({
@@ -10,8 +11,9 @@ import { MustMatch } from '../_helpers/must-match.validator';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
+  isLoggedin = false;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -35,6 +37,7 @@ export class LoginComponent implements OnInit {
 
     // display form values on success
     alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.loginForm.value, null, 4));
+    this.router.navigate(['home']);
   }
 
   onReset() {

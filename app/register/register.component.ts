@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { AuthenticationService } from '../services/authentication.service';
 import { EmployeeService } from '../services/employee.service';
 import { MustMatch } from '../_helpers/must-match.validator';
 
@@ -27,8 +28,13 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
+    private authenticationService: AuthenticationService,
     private employeeService: EmployeeService
-  ) {}
+  ) {
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
+  }
 
   ngOnInit() {
     // this.id = this.route.snapshot.params['id'];
@@ -78,6 +84,21 @@ export class RegisterComponent implements OnInit {
       return;
     }
     console.log(this.registerForm.value);
+
+    this.loading = true;
+    this.employeeService
+      .create(this.registerForm.value)
+      .pipe(first())
+      .subscribe(
+        (data) => {
+          // this.alertService.success('Registration successful', true);
+          this.router.navigate(['/login']);
+        },
+        (error) => {
+          // this.alertService.error(error);
+          this.loading = false;
+        }
+      );
 
     // display form values on success
     // alert(
