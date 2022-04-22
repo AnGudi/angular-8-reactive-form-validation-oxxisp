@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
 import { EmployeeService } from '../services/employee.service';
-import { MustMatch } from '../_helpers/must-match.validator';
+// import { MustMatch } from '../_helpers/must-match.validator';
 
 // import custom validator to validate that password and confirm password fields match
 @Component({
@@ -14,18 +14,16 @@ import { MustMatch } from '../_helpers/must-match.validator';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  loading = false;
+  // loading = false;
   submitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
-    private authenticationService: AuthenticationService,
-    private employeeService: EmployeeService
+    private router: Router // private authenticationService: AuthenticationService, // private employeeService: EmployeeService
   ) {
-    if (this.authenticationService.currentUserValue) {
-      this.router.navigate(['/']);
-    }
+    // if (this.authenticationService.currentUserValue) {
+    //   this.router.navigate(['/']);
+    // }
   }
 
   ngOnInit() {
@@ -45,10 +43,10 @@ export class RegisterComponent implements OnInit {
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', Validators.required],
         acceptTerms: [false, Validators.requiredTrue],
-      },
-      {
-        validator: MustMatch('password', 'confirmPassword'),
       }
+      // {
+      //   validator: MustMatch('password', 'confirmPassword'),
+      // }
     );
   }
 
@@ -66,18 +64,18 @@ export class RegisterComponent implements OnInit {
 
     console.log(this.registerForm.value);
 
-    this.loading = true;
-    this.employeeService
-      .create(this.registerForm.value)
-      .pipe(first())
-      .subscribe(
-        (data) => {
-          this.router.navigate(['/login']);
-        },
-        (error) => {
-          this.loading = false;
-        }
-      );
+    // this.loading = true;
+    // this.employeeService
+    //   .create(this.registerForm.value)
+    //   .pipe(first())
+    //   .subscribe(
+    //     (data) => {
+    //       this.router.navigate(['/login']);
+    //     },
+    //     (error) => {
+    //       this.loading = false;
+    //     }
+    //   );
   }
 
   onReset() {
