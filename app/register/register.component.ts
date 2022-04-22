@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControlOptions,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
 import { EmployeeService } from '../services/employee.service';
@@ -19,15 +14,12 @@ import { MustMatch } from '../_helpers/must-match.validator';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  id!: string;
-  isAddMode!: boolean;
   loading = false;
   submitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
     private employeeService: EmployeeService
   ) {
@@ -37,12 +29,8 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.id = this.route.snapshot.params['id'];
-    // this.isAddMode = !this.id;
-
     this.registerForm = this.formBuilder.group(
       {
-        title: ['', Validators.required],
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
         phone: [
@@ -62,13 +50,6 @@ export class RegisterComponent implements OnInit {
         validator: MustMatch('password', 'confirmPassword'),
       }
     );
-
-    // if (!this.isAddMode) {
-    //   this.employeeService
-    //     .getById(this.id)
-    //     .pipe(first())
-    //     .subscribe((x) => this.registerForm.patchValue(x));
-    // }
   }
 
   // convenience getter for easy access to form fields
@@ -78,8 +59,6 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    // stop here if form is invalid
-    // this.router.navigate(['/login']);
     if (this.registerForm.invalid) {
       return;
     }
@@ -91,50 +70,13 @@ export class RegisterComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (data) => {
-          // this.alertService.success('Registration successful', true);
           this.router.navigate(['/login']);
         },
         (error) => {
-          // this.alertService.error(error);
           this.loading = false;
         }
       );
-
-    // display form values on success
-    // alert(
-    //   'SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 7)
-    // );
-    // this.loading = true;
-    // if (this.isAddMode) {
-    //   this.createUser();
-    // } else {
-    //   this.updateUser();
-    // }
   }
-
-  // private createUser() {
-  //   this.employeeService
-  //     .create(this.registerForm.value)
-  //     .pipe(first())
-  //     .subscribe(() => {
-  //       // this.alertService.success('User added', { keepAfterRouteChange: true });
-  //       this.router.navigate(['../'], { relativeTo: this.route });
-  //     })
-  //     .add(() => (this.loading = false));
-  // }
-
-  // private updateUser() {
-  //   this.employeeService
-  //     .update(this.id, this.registerForm.value)
-  //     .pipe(first())
-  //     .subscribe(() => {
-  //       // this.alertService.success('User updated', {
-  //       //   keepAfterRouteChange: true,
-  //       // });
-  //       this.router.navigate(['../../'], { relativeTo: this.route });
-  //     })
-  //     .add(() => (this.loading = false));
-  // }
 
   onReset() {
     this.submitted = false;
