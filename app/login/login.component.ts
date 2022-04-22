@@ -11,7 +11,7 @@ import { MustMatch } from '../_helpers/must-match.validator';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
-  isLoggedin = false;
+  //isLoggedin = false;
 
   constructor(private formBuilder: FormBuilder, private router: Router) {}
 

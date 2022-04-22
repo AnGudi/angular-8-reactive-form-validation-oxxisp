@@ -3,8 +3,8 @@ export class Employee {
   firstName: string;
   lastName: string;
   phone: number;
-  emailId: string;
+  email: string;
   password: string;
-  active: boolean;
+  confirmPassword: string;
   isDeleting: boolean = false;
 }

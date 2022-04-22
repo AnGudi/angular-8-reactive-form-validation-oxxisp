@@ -2,11 +2,11 @@
   <div class="nav-item active">
     <a class="nav-link" href="/home">Home</a>
   </div>
-  <div class="nav-item active" *ngIf="!authService.isLoggedIn()">
+  <div class="nav-item active">
     <a class="nav-link" href="/login"><i class="fa fa-user"></i>Login</a>
   </div>
 
-  <div *ngIf="authService.isLoggedIn()">
+  <!-- <div *ngIf="authService.isLoggedIn()">
     Users from secure api end point:
     <ul>
       <li *ngFor="let user of users">
@@ -14,5 +14,5 @@
       </li>
     </ul>
   </div>
-  <p><a class="nav-link" href="/login">Logout</a></p>
+  <p><a class="nav-link" href="/login">Logout</a></p> -->
 </nav>

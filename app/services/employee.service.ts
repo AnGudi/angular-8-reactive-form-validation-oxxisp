@@ -20,8 +20,8 @@ export class EmployeeService {
     return this.http.get<Employee>(`${baseUrl}/${id}`);
   }
 
-  create(params: any) {
-    return this.http.post(baseUrl, params);
+  create(employee: Employee) {
+    return this.http.post(baseUrl, employee);
   }
 
   update(id: string, params: any) {

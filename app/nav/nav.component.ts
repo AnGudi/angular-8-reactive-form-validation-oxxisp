@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav.component.css'],
 })
 export class NavComponent implements OnInit {
-  isLoggedin = false;
+  // isLoggedin = false;
 
   constructor() {}
 
@@ -15,12 +15,12 @@ export class NavComponent implements OnInit {
   //   this.authService.logout();
   // }
 
-  isLoggedIn() {
-    if (JSON.parse(localStorage.getItem('currentUser')).auth_token == null) {
-      this.isLoggedin = false;
-      return this.isLoggedin;
-    } else {
-      return true;
-    }
-  }
+  // isLoggedIn() {
+  //   if (JSON.parse(localStorage.getItem('currentUser')).auth_token == null) {
+  //     this.isLoggedin = false;
+  //     return this.isLoggedin;
+  //   } else {
+  //     return true;
+  //   }
+  // }
 }
