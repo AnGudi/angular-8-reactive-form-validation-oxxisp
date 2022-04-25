@@ -1,10 +1,10 @@
 export class Employee {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
   phone: number;
   email: string;
   password: string;
   confirmPassword: string;
-  isDeleting: boolean = false;
+  token: string;
 }

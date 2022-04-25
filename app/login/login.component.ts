@@ -1,6 +1,10 @@
+import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { first } from 'rxjs/operators';
+import { AuthenticationService } from '../services/authentication.service';
+import { EmployeeService } from '../services/employee.service';
 
 @Component({
   selector: 'app-login',
@@ -10,15 +14,30 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
-  //isLoggedin = false;
+  loading = false;
+  returnUrl: string;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private employeeService: EmployeeService,
+    private authenticationService: AuthenticationService
+  ) {
+    // redirect to home if already logged in
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
+  }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   // convenience getter for easy access to form fields
@@ -35,8 +54,18 @@ export class LoginComponent implements OnInit {
     }
 
     // display form values on success
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.loginForm.value, null, 4));
-    this.router.navigate(['home']);
+    this.loading = true;
+    this.authenticationService
+      .login(this.f.email.value, this.f.password.value)
+      .pipe(first())
+      .subscribe(
+        (data) => {
+          this.router.navigate([this.returnUrl]);
+        },
+        (error) => {
+          this.loading = false;
+        }
+      );
   }
 
   onReset() {

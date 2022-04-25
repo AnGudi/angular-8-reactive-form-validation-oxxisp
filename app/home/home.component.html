@@ -1,5 +1,13 @@
 <app-nav></app-nav>
-<h2>Hello{{ user.firstName }}</h2>
+<h1>Hi {{ currentUser.firstName }}!</h1>
+<h3>All registered users:</h3>
+<ul>
+  <li *ngFor="let user of users">
+    {{ user.email }} ({{ user.firstName }} {{ user.lastName }}) -
+    <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
+  </li>
+</ul>
+<!-- <h2>Hello{{ user.firstName }}</h2>
 <h2>Users List</h2>
 <table class="table table-striped">
   <thead>
@@ -11,12 +19,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <!--<tr *ngFor="let user of users">
+    <tr> -->
+<!--<tr *ngFor="let user of users">
        <td>{{ user.title }} {{ user.firstName }} {{ user.lastName }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.phone }}</td> -->
-      <td>Anjali</td>
+<!-- <td>Anjali</td>
       <td>anjali@gmail.com</td>
       <td>9080706050</td>
       <td style="white-space: nowrap">
@@ -28,8 +36,8 @@
       <td style="white-space: nowrap">
         <a routerLink="edit/{{ user.id }}" class="btn btn-sm btn-danger mr-1"
           >Delete</a
-        >
-        <!-- <button
+        > -->
+<!-- <button
           (click)="deleteUser(user.id)"
           class="btn btn-sm btn-danger btn-delete-user"
           [disabled]="user.isDeleting"
@@ -40,7 +48,7 @@
           ></span>
           <span *ngIf="!user.isDeleting">Delete</span>
         </button> -->
-      </td>
+<!-- </td>
     </tr>
     <tr *ngIf="!users">
       <td colspan="4" class="text-center">
@@ -49,4 +57,4 @@
     </tr>
   </tbody>
 </table>
-<a href="/register" class="btn btn-sm btn-success mb-2">Add User</a>
+<a href="/register" class="btn btn-sm btn-success mb-2">Add User</a> -->

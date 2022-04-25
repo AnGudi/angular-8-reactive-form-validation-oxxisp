@@ -20,9 +20,12 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string) {
+  login(email: string, password: string) {
     return this.http
-      .post<any>(`/users/authenticate`, { username, password })
+      .post<any>(
+        `https://angular-8-reactive-form-validation-oxxisp.stackblitz.io/home/authenticate`,
+        { email, password }
+      )
       .pipe(
         map((user) => {
           // login successful if there's a jwt token in the response

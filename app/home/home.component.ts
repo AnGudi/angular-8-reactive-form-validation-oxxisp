@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { Employee } from '../models/employee';
+import { AuthenticationService } from '../services/authentication.service';
 import { EmployeeService } from '../services/employee.service';
 
 @Component({
@@ -9,24 +11,44 @@ import { EmployeeService } from '../services/employee.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  users!: Employee[];
+  currentUser: Employee;
+  currentUserSubscription: Subscription;
+  users: Employee[] = [];
 
-  constructor(private userservice: EmployeeService) {}
-
-  ngOnInit() {
-    this.userservice
-      .getAll()
-      .pipe(first())
-      .subscribe((users) => (this.users = users));
+  constructor(
+    private employeeService: EmployeeService,
+    private authenticationService: AuthenticationService
+  ) {
+    this.currentUserSubscription =
+      this.authenticationService.currentUser.subscribe((user) => {
+        this.currentUser = user;
+      });
   }
 
-  deleteUser(id: string) {
-    const user = this.users.find((x) => x.id === id);
-    if (!user) return;
-    user.isDeleting = true;
-    this.userservice
+  ngOnInit() {
+    this.loadAllUsers();
+  }
+
+  ngOnDestroy() {
+    // unsubscribe to ensure no memory leaks
+    this.currentUserSubscription.unsubscribe();
+  }
+
+  deleteUser(id: number) {
+    this.employeeService
       .delete(id)
       .pipe(first())
-      .subscribe(() => (this.users = this.users.filter((x) => x.id !== id)));
+      .subscribe(() => {
+        this.loadAllUsers();
+      });
+  }
+
+  private loadAllUsers() {
+    this.employeeService
+      .getAll()
+      .pipe(first())
+      .subscribe((users) => {
+        this.users = users;
+      });
   }
 }
